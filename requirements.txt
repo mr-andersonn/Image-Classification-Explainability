@@ -6,3 +6,4 @@ matplotlib
 scikit-learn
 Pillow
 tensorflow==2.21.0
+kagglehub
