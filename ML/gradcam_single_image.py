@@ -1,6 +1,7 @@
 def visualize_gradcam(
-    img_path, 
-    model, 
+    img_path,
+    model,
+    class_names=None,
     target_layer_name="mobilenetv2_1.00_224",
     class_index=None,
     alpha=0.45,
@@ -8,13 +9,15 @@ def visualize_gradcam(
 ):
     """
     Create Grad-CAM visualization for a single image.
-    
+
     Parameters:
     -----------
     img_path : str
         Path to the input image
     model : tf.keras.Model
         The trained model
+    class_names : list, optional
+        List of class names for display. If None, uses class indices.
     target_layer_name : str
         Name of the layer to use for Grad-CAM (default: "mobilenetv2_1.00_224")
     class_index : int, optional
@@ -23,7 +26,7 @@ def visualize_gradcam(
         Transparency of heatmap overlay (0.0-1.0)
     save_path : str, optional
         Path to save the visualization. If None, only displays.
-        
+
     Returns:
     --------
     tuple: (pil_img, heatmap, overlay_img, used_class_index)
@@ -43,20 +46,23 @@ def visualize_gradcam(
     # Get the target layer
     mobilenet_layer = model.get_layer(target_layer_name)
     subsequent_layers = model.layers[model.layers.index(mobilenet_layer) + 1:]
-    
+
     # Compute Grad-CAM
     with tf.GradientTape() as tape:
         conv_outputs = mobilenet_layer(img_tensor, training=False)
         tape.watch(conv_outputs)
-        
+
         x = conv_outputs
         for layer in subsequent_layers:
             x = layer(x, training=False)
         predictions = x
-        
+
+        # Store predictions for display
+        probs = predictions[0].numpy()
+
         if class_index is None:
             class_index = int(tf.argmax(predictions[0]))
-        
+
         class_score = predictions[:, class_index]
     
     grads = tape.gradient(class_score, conv_outputs)
@@ -88,19 +94,24 @@ def visualize_gradcam(
     
     # Visualize
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
+
     axes[0].imshow(img)
     axes[0].set_title('Original Image', fontsize=14)
     axes[0].axis('off')
-    
+
     axes[1].imshow(heatmap, cmap='jet')
     axes[1].set_title('Grad-CAM Heatmap', fontsize=14)
     axes[1].axis('off')
-    
+
     axes[2].imshow(overlay_img)
-    axes[2].set_title(f'Overlay (Class {class_index})', fontsize=14)
+    # Create title with prediction and confidence
+    if class_names:
+        overlay_title = f'Overlay\nPrediction: {class_names[class_index]}\nConfidence: {probs[class_index]*100:.2f}%'
+    else:
+        overlay_title = f'Overlay\nClass {class_index}\nConfidence: {probs[class_index]*100:.2f}%'
+    axes[2].set_title(overlay_title, fontsize=14)
     axes[2].axis('off')
-    
+
     plt.tight_layout()
     
     if save_path:
