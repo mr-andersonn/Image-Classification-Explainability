@@ -2,7 +2,6 @@ import os
 import random
 import numpy as np
 from PIL import Image
-from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 
 
 def get_random_image_path(dataset_folder, class_names=None):
@@ -101,9 +100,10 @@ def find_misclassified_image(model, class_names, dataset_folder, max_attempts=10
             continue
 
         # Load and preprocess image
+        # Note: No preprocessing applied - assumes model has built-in rescaling layer
+        # (e.g., MobileNetV3Large_Improved.keras has a Rescaling layer at the start)
         img = Image.open(img_path).convert("RGB").resize((224, 224))
         arr = np.array(img).astype("float32")
-        arr = preprocess_input(arr)
         img_tensor = np.expand_dims(arr, axis=0)
 
         # Predict
