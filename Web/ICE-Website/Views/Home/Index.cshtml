@@ -1,7 +1,75 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ICE_Website.Models.ExplainabilityModel
+
+@{
+    ViewData["Title"] = "Image Classifier Explainability";
 }
 
-<div class="text-center">
-    <h1>Explainability methods in image classification</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Image Classifier Explainability</h1>
+
+    <form asp-action="Index" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="ImageFile" class="form-label">Upload image</label>
+            <input asp-for="ImageFile" type="file" accept="image/*" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Classify Image
+        </button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger mt-4">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.PredictedClass))
+    {
+        <hr class="my-5" />
+
+        <h2>Result</h2>
+
+        <p>
+            <strong>Predicted class:</strong> @Model.PredictedClass
+        </p>
+
+        <p>
+            <strong>Confidence:</strong> @((Model.Confidence ?? 0).ToString("P2"))
+        </p>
+
+        @if (!string.IsNullOrEmpty(Model.HeatmapImage))
+        {
+            <h3 class="mt-4">Explanation Heatmap</h3>
+
+            <img src="@Model.HeatmapImage"
+                 alt="Grad-CAM heatmap"
+                 class="img-fluid rounded border"
+                 style="max-width: 600px;" />
+        }
+
+        @if (Model.AllPredictions != null && Model.AllPredictions.Any())
+        {
+            <h3 class="mt-4">All Predictions</h3>
+
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Confidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var prediction in Model.AllPredictions.OrderByDescending(p => p.Confidence))
+                    {
+                        <tr>
+                            <td>@prediction.ClassName</td>
+                            <td>@prediction.Confidence.ToString("P2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
 </div>
