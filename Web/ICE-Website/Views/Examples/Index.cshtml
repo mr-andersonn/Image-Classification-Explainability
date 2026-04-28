@@ -1,0 +1,159 @@
+﻿@model ICE_Website.Models.Examples.ExamplesPageModel
+
+@{
+    ViewData["Title"] = "Examples";
+}
+
+<div class="container-fluid mt-5 px-4">
+    <h1 class="mb-3">Examples</h1>
+
+    <p class="text-muted mb-4">
+        Select one of the images to run the classifier and look at the visualizations.
+    </p>
+    
+    <section class="mb-5">
+        <h4>Dataset Images</h4>
+
+        <p class="text-muted">
+            These images come from the training dataset used to build the model.
+            They represent the distribution the model has learned from.
+        </p>
+
+        <div class="d-flex flex-row gap-3 overflow-auto pb-3">
+            @foreach (var image in Model.Images.Where(i => i.SourceType == "Dataset"))
+            {
+                var isSelected = image.ImageUrl == Model.SelectedImageUrl;
+
+                <form asp-action="Index"
+                      asp-controller="Examples"
+                      method="post"
+                      class="flex-shrink-0">
+
+                    <input type="hidden" name="selectedImageUrl" value="@image.ImageUrl" />
+
+                    <button type="submit"
+                            class="border-0 bg-transparent p-0 text-start">
+
+                        <div class="card shadow-sm @(isSelected ? "border-primary border-3" : "")"
+                             style="width: 220px;">
+
+                            <img src="@image.ImageUrl"
+                                 class="card-img-top"
+                                 alt="@image.Title"
+                                 style="height: 150px; object-fit: cover;" />
+
+                            <div class="card-body">
+                                <h6 class="card-title mb-1">@image.Title</h6>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+            }
+        </div>
+    </section>
+    
+    <section class="mb-5">
+        <h4>Random Images</h4>
+
+        <p class="text-muted">
+            These images are not part of the training dataset. They are used to evaluate
+            how well the model generalizes to unseen real-world data, as well as what predictions it gives to completely unrelated things.
+        </p>
+
+        <div class="d-flex flex-row gap-3 overflow-auto pb-3">
+            @foreach (var image in Model.Images.Where(i => i.SourceType == "Random"))
+            {
+                var isSelected = image.ImageUrl == Model.SelectedImageUrl;
+
+                <form asp-action="Index"
+                      asp-controller="Examples"
+                      method="post"
+                      class="flex-shrink-0">
+
+                    <input type="hidden" name="selectedImageUrl" value="@image.ImageUrl" />
+
+                    <button type="submit"
+                            class="border-0 bg-transparent p-0 text-start">
+
+                        <div class="card shadow-sm @(isSelected ? "border-success border-3" : "")"
+                             style="width: 220px;">
+
+                            <img src="@image.ImageUrl"
+                                 class="card-img-top"
+                                 alt="@image.Title"
+                                 style="height: 150px; object-fit: cover;" />
+
+                            <div class="card-body">
+                                <h6 class="card-title mb-1">@image.Title</h6>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+            }
+        </div>
+    </section>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    @if (Model.PredictionResult != null)
+    {
+        <section class="mt-4">
+            <h2>Prediction Result</h2>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <p>
+                        <strong>Predicted class:</strong>
+                        @Model.PredictionResult.PredictedClass
+                    </p>
+                    <p>
+                        <strong>Confidence:</strong>
+                        @Model.PredictionResult.Confidence.ToString("P2")
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        @if (!string.IsNullOrWhiteSpace(Model.PredictionResult.HeatmapImage))
+        {
+            <section class="mt-5">
+                <h2>Grad-CAM Heatmap</h2>
+
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <img src="@Model.PredictionResult.HeatmapImage"
+                             alt="Grad-CAM heatmap"
+                             class="img-fluid rounded border" />
+                    </div>
+                </div>
+            </section>
+        }
+
+        @if (Model.PredictionResult.ActivationImages.Any())
+        {
+            <section class="mt-5">
+                <h2>Intermediate Activations</h2>
+
+                @foreach (var activation in Model.PredictionResult.ActivationImages)
+                {
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header">
+                            <strong>@activation.LayerName</strong>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <img src="@activation.Image"
+                                 alt="Activation visualization for @activation.LayerName"
+                                 class="img-fluid rounded border" />
+                        </div>
+                    </div>
+                }
+            </section>
+        }
+    }
+</div>

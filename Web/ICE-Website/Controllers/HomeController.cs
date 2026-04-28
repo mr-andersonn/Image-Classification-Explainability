@@ -2,7 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using ICE_Website.Models;
 
-namespace YourProjectName.Controllers;
+namespace ICE_Website.Controllers;
 
 public class HomeController : Controller
 {
@@ -32,7 +32,7 @@ public class HomeController : Controller
         {
             using var form = new MultipartFormDataContent();
 
-            using var stream = model.ImageFile.OpenReadStream();
+            await using var stream = model.ImageFile.OpenReadStream();
             using var fileContent = new StreamContent(stream);
 
             fileContent.Headers.ContentType =
@@ -40,7 +40,10 @@ public class HomeController : Controller
 
             form.Add(fileContent, "file", model.ImageFile.FileName);
 
-            var response = await _httpClient.PostAsync("http://127.0.0.1:8000/predict", form);
+            var response = await _httpClient.PostAsync(
+                "http://127.0.0.1:8000/predict",
+                form
+            );
 
             if (!response.IsSuccessStatusCode)
             {
@@ -50,12 +53,13 @@ public class HomeController : Controller
 
             var json = await response.Content.ReadAsStringAsync();
 
-            var result = JsonSerializer.Deserialize<ExplainabilityModel>(
+            var result = JsonSerializer.Deserialize<PredictionResult>(
                 json,
                 new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
-                });
+                }
+            );
 
             if (result == null)
             {
@@ -64,9 +68,11 @@ public class HomeController : Controller
             }
 
             model.PredictedClass = result.PredictedClass;
+            model.PredictedIndex = result.PredictedIndex;
             model.Confidence = result.Confidence;
             model.HeatmapImage = result.HeatmapImage;
             model.AllPredictions = result.AllPredictions;
+            model.ActivationImages = result.ActivationImages;
 
             return View(model);
         }
