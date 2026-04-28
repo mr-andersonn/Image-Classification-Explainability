@@ -7,4 +7,8 @@
         <RootNamespace>ICE_Website</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\About\Index.cshtml" />
+    </ItemGroup>
+
 </Project>
