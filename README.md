@@ -58,7 +58,7 @@ To retrain:
 
 While there are single files for each explainability method that can be run using the files in `ML/Visualization_files`. The main notebook `ML/Visualization_in_one.ipynb` contains all the visualizations, and have been the preffered method during testing.
 
-in `Visualization_in_one.ipynb` you will se that in the second cell you can choose which picture you would like to visualize, or using functionality implemented in `ML/Visualization_files/gather_image.py` you can visualize all the pictures in the dataset.
+in `Visualization_in_one.ipynb` you will se that in the second cell you can choose which picture you would like to visualize, or using functionality implemented in `ML/Visualization_files/gather_image.py` you can select a image from the dataset.
 
 ## Deployment
 
