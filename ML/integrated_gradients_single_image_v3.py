@@ -98,13 +98,19 @@ def visualize_integrated_gradients(
     axes[1].imshow(heatmap, cmap="jet")
     axes[1].axis("off")
     if class_names:
-        axes[1].set_title(f"Integrated Gradients Heatmap\nClass: {class_names[target_class_idx]}", fontsize=14)
+        axes[1].set_title(f"Integrated Gradients Heatmap\nCompared Class: {class_names[target_class_idx]}", fontsize=14)
     else:
-        axes[1].set_title(f"Integrated Gradients Heatmap\nClass: {target_class_idx}", fontsize=14)
+        axes[1].set_title(f"Integrated Gradients Heatmap\nCompared Class: {target_class_idx}", fontsize=14)
 
     axes[2].imshow(overlay_img)
     axes[2].axis("off")
-    axes[2].set_title("Overlay", fontsize=14)
+
+    true_class_name = img_path.replace("\\", "/").split("/")[-3]
+
+    if class_names:
+        axes[2].set_title(f"Overlay\nCompared: {class_names[target_class_idx]}\nTrue: {true_class_name}", fontsize=14)
+    else:
+        axes[2].set_title(f"Overlay\nCompared: {target_class_idx}\nTrue: {true_class_name}", fontsize=14)
 
     plt.tight_layout()
 

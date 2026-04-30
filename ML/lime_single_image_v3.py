@@ -135,8 +135,10 @@ def visualize_lime(
     # Visualize
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
+    true_class_name = img_path.replace("\\", "/").split("/")[-3]
+
     axes[0].imshow(img)
-    axes[0].set_title('Original Image', fontsize=14)
+    axes[0].set_title(f'Original Image\nTrue: {true_class_name}', fontsize=14)
     axes[0].axis('off')
 
     axes[1].imshow(explanation_mask, cmap='jet')
