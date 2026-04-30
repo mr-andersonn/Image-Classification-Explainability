@@ -9,6 +9,7 @@ modellfil eller instruksjon for hvordan modellen trenes
 ingen store, unødvendige filer eller lokale paths som bare fungerer på én PC
 
 <br>
+
 # Deployment
 
 Kjøring av applikasjonen lokalt innebærer 2 steg:
