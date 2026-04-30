@@ -1,19 +1,5 @@
 # Image-Classification-Explainability
-<<<<<<< Updated upstream
-DAT255 Project Group 42.
-README med hvordan man kjører trening, visualisering og app
-requirements.txt eller environment.yml
-tydelig lenke til datasettet
-notebooks/scripts navngitt forståelig
-lagrede figurer eller kode som genererer figurene
-modellfil eller instruksjon for hvordan modellen trenes
-ingen store, unødvendige filer eller lokale paths som bare fungerer på én PC
 
-<br>
-
-# Deployment
-
-=======
 DAT255 Project Group 42
 
 This project implements image classification with explainability methods for fish species recognition, including a web application and FastAPI backend for visualizing model predictions.
@@ -37,11 +23,11 @@ Main dependencies:
 - KaggleHub
 - keras
 
-## "Project_setup" directory guide. 
+## "Project_setup" directory guide.
 In project setup directory there are notebooks for testing the setup, and checking some of the main requirements are installed correctly. Such as Tensorflow with GPU support.
-- `ML/Project_setup/Check_setup.ipynb` - Check if the setup is correct. 
+- `ML/Project_setup/Check_setup.ipynb` - Check if the setup is correct.
 
-In Download dataset notebook, there is a functionality to download the dataset from Kaggle. Set up your own desired paths. Furthermore there is a cell that cleans the datset so it follows the same directory structure as is used in model_creation notebooks. 
+In Download dataset notebook, there is a functionality to download the dataset from Kaggle. Set up your own desired paths. Furthermore there is a cell that cleans the datset so it follows the same directory structure as is used in model_creation notebooks.
 - `ML/Project_setup/Download_dataset.ipynb` - Download the dataset.
 
 ### Dataset
@@ -62,7 +48,7 @@ We use the [Large-Scale Fish Dataset](https://www.kaggle.com/datasets/crowww/a-l
 
 ## Model Training
 
-The trained model that is used in report and on web application is provided as `MobileNetV3Large_Improved.keras`. 
+The trained model that is used in report and on web application is provided as `MobileNetV3Large_Improved.keras`.
 To retrain:
 1. Prepare the cleaned dataset
 2. Use the notebooks/scripts in `ML/Model_Creation/MobileNetV3Large_Improved.ipynb`
@@ -70,48 +56,34 @@ To retrain:
 
 ## Running Explainability Visualizations
 
-While there are single files for each explainability methot that can be run using the files in `ML/Visualization_files`. The main notebook `ML/Visualization_in_one.ipynb` contains all the visualizations, and have been the preffered method during testing. 
+While there are single files for each explainability method that can be run using the files in `ML/Visualization_files`. The main notebook `ML/Visualization_in_one.ipynb` contains all the visualizations, and have been the preffered method during testing.
 
 in `Visualization_in_one.ipynb` you will se that in the second cell you can choose which picture you would like to visualize, or using functionality implemented in `ML/Visualization_files/gather_image.py` you can visualize all the pictures in the dataset.
 
-# Deployment
->>>>>>> Stashed changes
-Kjøring av applikasjonen lokalt innebærer 2 steg:
+## Deployment
 
-## 1. Starte FastAPI-serveren
-Dette kan gjøres ved å laste ned repository, navigere til følgende mappe:
+Running the application locally involves 2 steps:
 
-<<<<<<< Updated upstream
+### 1. Start the FastAPI server
+Download the repository and navigate to the following folder:
+
 `Image-Classification-Explainability/ML/FastAPI/`
-=======
-``Image-Classification-Explainability/ML/FastAPI/``
->>>>>>> Stashed changes
 
-og starte serveren med kommandoen:
+Start the server with the command:
 
 ```bash
 uvicorn main:app --reload
 ```
-<<<<<<< Updated upstream
 
-## 2. Starte ASP.NET MVC-applikasjonen
-Naviger til følgende mappe: 
+### 2. Start the ASP.NET MVC application
+Navigate to the following folder:
+
 `Image-Classification-Explainability/Web/ICE-Website/`
 
-og kjør kommandoen 
-=======
-## 2. Starte ASP.NET MVC-applikasjonen
-Naviger til følgende mappe: I ``mage-Classification-Explainability/Web/ICE-Website/``
-
-og kjør kommandoen
->>>>>>> Stashed changes
+Run the command:
 
 ```bash
 dotnet run
 ```
 
-<<<<<<< Updated upstream
-Lenken til nettsiden vil bli skrevet ut i terminalen.
-=======
-Lenken til nettsiden vil bli skrevet ut i terminalen.
->>>>>>> Stashed changes
+The link to the website will be printed in the terminal.
