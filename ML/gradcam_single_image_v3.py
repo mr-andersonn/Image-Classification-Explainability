@@ -138,7 +138,8 @@ def visualize_gradcam(
     target_layer_name=None,
     class_index=None,
     alpha=0.4,
-    save_path=None
+    save_path=None,
+    true_class_index=None
 ):
     """
     Create Grad-CAM visualization for a single image (compatible with old API).
@@ -203,11 +204,15 @@ def visualize_gradcam(
     axes[1].axis('off')
 
     axes[2].imshow(overlay_pil)
-    # Create title with prediction and confidence
+    # Create title with prediction, confidence, and true class
     if class_names:
         overlay_title = f'Overlay\nPrediction: {class_names[class_index]}\nConfidence: {class_prob*100:.2f}%'
+        if true_class_index is not None:
+            overlay_title += f'\nTrue: {class_names[true_class_index]}'
     else:
         overlay_title = f'Overlay\nClass {class_index}\nConfidence: {class_prob*100:.2f}%'
+        if true_class_index is not None:
+            overlay_title += f'\nTrue Class: {true_class_index}'
     axes[2].set_title(overlay_title, fontsize=14)
     axes[2].axis('off')
 
