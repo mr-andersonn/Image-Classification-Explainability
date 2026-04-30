@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ICE-Website")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f668c037f99a3c4c5c05babdb84276e3f931501")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f38a041978cc359798deee4c1d55b404c8416cac")]
 [assembly: System.Reflection.AssemblyProductAttribute("ICE-Website")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ICE-Website")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

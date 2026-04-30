@@ -121,26 +121,32 @@ public class ExamplesController : Controller
                 },
                 new()
                 {
-                    Title = "Angelfish",
-                    ImageUrl = "/images/random/random_angelfish.png",
+                    Title = "Atlantic Cod",
+                    ImageUrl = "/images/random/random_atlantic_cod.jpeg",
                     SourceType = "Random"
                 },
                 new()
                 {
-                    Title = "Nemo",
-                    ImageUrl = "/images/random/random_nemo.jpg",
+                    Title = "Hake",
+                    ImageUrl = "/images/random/random_hake.jpeg",
                     SourceType = "Random"
                 },
                 new()
                 {
-                    Title = "BMW",
-                    ImageUrl = "/images/random/random_bmw.png",
+                    Title = "Wrasse",
+                    ImageUrl = "/images/random/random_wrasse.jpeg",
                     SourceType = "Random"
                 },
                 new()
                 {
-                    Title = "Aquaman",
-                    ImageUrl = "/images/random/random_aquaman.jpg",
+                    Title = "Duck",
+                    ImageUrl = "/images/random/random_duck.jpeg",
+                    SourceType = "Random"
+                },
+                new()
+                {
+                    Title = "Car",
+                    ImageUrl = "/images/random/random_car.jpeg",
                     SourceType = "Random"
                 },
             }
