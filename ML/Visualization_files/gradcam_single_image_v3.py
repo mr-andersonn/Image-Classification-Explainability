@@ -174,7 +174,7 @@ def visualize_gradcam(
     img_batch = np.expand_dims(img_array, axis=0)
 
     # Get predictions
-    predictions = model.predict(img_batch, verbose=0)[0]
+    predictions = model.predict([[img_batch]], verbose=0)[0]
 
     # Determine class index
     if class_index is None:
@@ -273,7 +273,7 @@ Examples:
     img_array_batch = np.expand_dims(img_array, axis=0)
 
     # Get prediction
-    predictions = model.predict(img_array_batch, verbose=0)[0]
+    predictions = model.predict([[img_array_batch]], verbose=0)[0]
     pred_idx = int(np.argmax(predictions))
     pred_class = CLASS_NAMES[pred_idx]
     pred_prob = float(predictions[pred_idx])
