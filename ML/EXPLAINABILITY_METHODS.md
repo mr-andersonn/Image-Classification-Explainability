@@ -1,7 +1,7 @@
 # Explainability Methods for Image Classification
 
 This document explains the four explainability methods implemented for analyzing the fish classification model.
-# This is pure chaptgpt, and not quality controlled
+
 ---
 
 ## 1. Grad-CAM (Gradient-weighted Class Activation Mapping)
